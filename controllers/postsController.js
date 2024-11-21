@@ -1,6 +1,6 @@
 const posts = require("../db/postsList");
 
-// * Index
+// * INDEX
 function index(req, res) {
   const titleFilter = req.query.title;
   const hashtagFilter = req.query.hashtag;
@@ -26,7 +26,7 @@ function index(req, res) {
   res.json({ newPostList, listLength: newPostList.length });
 }
 
-// * Show
+// * SHOW
 function show(req, res) {
   const id = parseInt(req.params.id);
 
@@ -46,12 +46,12 @@ function show(req, res) {
   res.send(postRequired);
 }
 
-// * Store
+// * STORE
 function store(req, res) {
   res.send(`Store post`);
 }
 
-// * Update
+// * UPDATE
 function update(req, res) {
   const id = parseInt(req.params.id);
 
@@ -63,7 +63,7 @@ function update(req, res) {
   res.send(`Update post with id ${id}`);
 }
 
-// * Modify
+// * MODIFY
 function modify(req, res) {
   const id = parseInt(req.params.id);
 
@@ -75,7 +75,7 @@ function modify(req, res) {
   res.send(`Modify post with id ${id}`);
 }
 
-// * Destroy
+// * DESTROY
 function destroy(req, res) {
   const id = parseInt(req.params.id);
 
