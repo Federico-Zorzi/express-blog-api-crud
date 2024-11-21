@@ -101,7 +101,8 @@ function destroy(req, res) {
   const postDeleted = posts.splice(postToDeleteIndex, 1);
 
   /*   res.send(`Delete post with id ${id}`); */
-  res.json({ postDeleted, posts });
+  console.log({ postDeleted, posts });
+  res.status(204).send();
 }
 
 module.exports = { index, show, store, update, modify, destroy };
