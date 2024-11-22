@@ -50,7 +50,7 @@ function show(req, res) {
   }
 
   /* res.send(`Show post with id ${id}`); */
-  res.send(postRequired);
+  res.json(postRequired);
 }
 
 // * STORE
