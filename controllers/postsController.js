@@ -8,9 +8,10 @@ function index(req, res) {
 
   if (titleFilter) {
     newPostList = posts.filter((post) =>
-      post.titolo.toLowerCase().includes(titleFilter.toLowerCase())
+      post.title.toLowerCase().includes(titleFilter.toLowerCase())
     );
   }
+
   if (hashtagFilter) {
     newPostList = newPostList.filter((post) => {
       let hashtagIncluded = false;
@@ -32,14 +33,20 @@ function show(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).send(`id required not valid`);
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Id required not valid",
+    });
   }
 
   /* trovo il post tramite l'id */
   const postRequired = posts.find((post) => post.id === id);
 
   if (!postRequired) {
-    return res.status(404).send(`id required not found`);
+    return res.status(404).json({
+      error: "Not Found",
+      message: "Id required not found",
+    });
   }
 
   /* res.send(`Show post with id ${id}`); */
@@ -48,7 +55,21 @@ function show(req, res) {
 
 // * STORE
 function store(req, res) {
-  res.send(`Store post`);
+  const { title, content, image, tags } = req.body;
+
+  if (!title || !content || !image || !Array.isArray(tags) || !tags.length) {
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Check all parameters passed",
+    });
+  }
+
+  const id = posts.at(-1).id + 1;
+
+  const newPost = { id, title, content, image, tags };
+  posts.push(newPost);
+
+  res.json({ newPost, posts });
 }
 
 // * UPDATE
@@ -57,10 +78,29 @@ function update(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).send(`id required not valid`);
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Id required not valid",
+    });
   }
 
-  res.send(`Update post with id ${id}`);
+  const { title, content, image, tags } = req.body;
+
+  if (!title || !content || !image || !Array.isArray(tags) || !tags.length) {
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Check all parameters passed",
+    });
+  }
+
+  const postUpdated = posts.find((post) => post.id === id);
+
+  postUpdated.title = title;
+  postUpdated.content = content;
+  postUpdated.image = image;
+  postUpdated.tags = tags;
+
+  res.json({ postUpdated, posts });
 }
 
 // * MODIFY
@@ -69,7 +109,10 @@ function modify(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).send(`id required not valid`);
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Id required not valid",
+    });
   }
 
   res.send(`Modify post with id ${id}`);
@@ -81,20 +124,29 @@ function destroy(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).send(`id required not valid`);
+    return res.status(400).json({
+      error: "Bad request by client",
+      message: "Id required not valid",
+    });
   }
 
   /* ricerca dell'index dell'elemento con l'id scelto da eliminare */
   const postToDelete = posts.find((post) => post.id === id);
 
   if (!postToDelete) {
-    return res.status(404).send(`id required not found`);
+    return res.status(404).json({
+      error: "Not Found",
+      message: "Id required not found",
+    });
   }
 
   const postToDeleteIndex = posts.indexOf(postToDelete);
 
   if (!postToDeleteIndex && postToDeleteIndex !== 0) {
-    return res.status(404).send(`id required not found`);
+    return res.status(404).json({
+      error: "Not Found",
+      message: "Id required not found",
+    });
   }
 
   /* rimozione dell'index trovato */
