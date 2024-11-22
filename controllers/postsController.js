@@ -115,7 +115,28 @@ function modify(req, res) {
     });
   }
 
-  res.send(`Modify post with id ${id}`);
+  const { title, content, image, tags } = req.body;
+
+  const postModified = posts.find((post) => post.id === id);
+
+  if (title) postModified.title = title;
+
+  if (content) postModified.content = content;
+
+  if (image) postModified.image = image;
+
+  if (tags) {
+    if (Array.isArray(tags)) {
+      postModified.tags = tags;
+    } else {
+      return res.status(400).json({
+        error: "Bad request by client",
+        message: "Id required not valid",
+      });
+    }
+  }
+
+  res.json({ postModified, posts });
 }
 
 // * DESTROY
