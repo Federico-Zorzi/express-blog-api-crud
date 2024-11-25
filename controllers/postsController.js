@@ -143,7 +143,7 @@ function modify(req, res) {
     if (Array.isArray(tags)) {
       postModified.tags = tags;
     } else {
-      const err = new Error("No tags variables passed by client");
+      const err = new Error("tags passed by client is not an array");
       err.status = 400;
       err.error = "Bad request by client";
       throw err;
