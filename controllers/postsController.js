@@ -33,20 +33,20 @@ function show(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Id required not valid",
-    });
+    const err = new Error("Id required not valid");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   /* trovo il post tramite l'id */
   const postRequired = posts.find((post) => post.id === id);
 
   if (!postRequired) {
-    return res.status(404).json({
-      error: "Not Found",
-      message: "Id required not found",
-    });
+    const err = new Error("Id required not found");
+    err.status = 404;
+    err.error = "Not Found";
+    throw err;
   }
 
   /* res.send(`Show post with id ${id}`); */
@@ -58,10 +58,10 @@ function store(req, res) {
   const { title, content, image, tags } = req.body;
 
   if (!title || !content || !image || !Array.isArray(tags) || !tags.length) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Check all parameters passed",
-    });
+    const err = new Error("Check all parameters passed");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   const id = posts.at(-1).id + 1;
@@ -78,22 +78,29 @@ function update(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Id required not valid",
-    });
+    const err = new Error("Id required not valid");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   const { title, content, image, tags } = req.body;
 
   if (!title || !content || !image || !Array.isArray(tags) || !tags.length) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Check all parameters passed",
-    });
+    const err = new Error("Check all parameters passed");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   const postUpdated = posts.find((post) => post.id === id);
+
+  if (!postUpdated) {
+    const err = new Error("Id required not found");
+    err.status = 404;
+    err.error = "Not Found";
+    throw err;
+  }
 
   postUpdated.title = title;
   postUpdated.content = content;
@@ -109,15 +116,22 @@ function modify(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Id required not valid",
-    });
+    const err = new Error("Id required not valid");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   const { title, content, image, tags } = req.body;
 
   const postModified = posts.find((post) => post.id === id);
+
+  if (!postModified) {
+    const err = new Error("Id required not found");
+    err.status = 404;
+    err.error = "Not Found";
+    throw err;
+  }
 
   if (title) postModified.title = title;
 
@@ -129,10 +143,10 @@ function modify(req, res) {
     if (Array.isArray(tags)) {
       postModified.tags = tags;
     } else {
-      return res.status(400).json({
-        error: "Bad request by client",
-        message: "Id required not valid",
-      });
+      const err = new Error("No tags variables passed by client");
+      err.status = 400;
+      err.error = "Bad request by client";
+      throw err;
     }
   }
 
@@ -145,29 +159,29 @@ function destroy(req, res) {
 
   /* controllo se l'id è valido */
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "Bad request by client",
-      message: "Id required not valid",
-    });
+    const err = new Error("Id required not valid");
+    err.status = 400;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   /* ricerca dell'index dell'elemento con l'id scelto da eliminare */
   const postToDelete = posts.find((post) => post.id === id);
 
   if (!postToDelete) {
-    return res.status(404).json({
-      error: "Not Found",
-      message: "Id required not found",
-    });
+    const err = new Error("Id required not found");
+    err.status = 404;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   const postToDeleteIndex = posts.indexOf(postToDelete);
 
   if (!postToDeleteIndex && postToDeleteIndex !== 0) {
-    return res.status(404).json({
-      error: "Not Found",
-      message: "Id required not found",
-    });
+    const err = new Error("Id required not found");
+    err.status = 404;
+    err.error = "Bad request by client";
+    throw err;
   }
 
   /* rimozione dell'index trovato */
