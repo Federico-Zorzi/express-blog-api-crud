@@ -4,6 +4,7 @@ const postList = [
     title: "ciambellone",
     content: "plumcake a forma di ciambellone",
     image: "/images/ciambellone.jpeg",
+    category: "Dolce",
     tags: ["Dolci", "Colazione", "Dessert", "Ciambella"],
   },
   {
@@ -11,6 +12,7 @@ const postList = [
     title: "cracker barbabietola",
     content: "cracker al gusto di barbabietola",
     image: "/images/cracker_barbabietola.jpeg",
+    category: "Salato",
     tags: ["Salato", "HealthySnacks", "Barbabietola", "NaturalIngredients"],
   },
   {
@@ -18,6 +20,7 @@ const postList = [
     title: "pane fritto dolce",
     content: "pane fritto dolce",
     image: "/images/pane_fritto_dolce.jpeg",
+    category: "Dolce",
     tags: ["Dolci", "Colazione", "Dessert", "HomemadeDesserts"],
   },
   {
@@ -25,6 +28,7 @@ const postList = [
     title: "pasta barbabietola",
     content: "pasta condita con la barbabietola",
     image: "/images/pasta_barbabietola.jpeg",
+    category: "Salato",
     tags: ["Salato", "Pranzo", "Barbabietola", "ItalianFood", "PastaLovers"],
   },
   {
@@ -32,6 +36,7 @@ const postList = [
     title: "torta paesana",
     content: "torta paesana",
     image: "/images/torta_paesana.jpeg",
+    category: "Dolce",
     tags: ["Dolci", "Spuntino", "Dessert", "TortaPaesana", "RicetteDellaNonna"],
   },
 ];

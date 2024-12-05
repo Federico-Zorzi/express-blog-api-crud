@@ -189,7 +189,7 @@ function destroy(req, res) {
 
   /*   res.send(`Delete post with id ${id}`); */
   console.log({ postDeleted, posts });
-  res.status(204).send();
+  res.status(200).json({ postDeleted, posts });
 }
 
 module.exports = { index, show, store, update, modify, destroy };
