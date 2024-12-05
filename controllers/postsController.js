@@ -55,9 +55,10 @@ function show(req, res) {
 
 // * STORE
 function store(req, res) {
-  const { title, content, image, tags } = req.body;
+  const { title, content, author, image, category, isPublished, tags } =
+    req.body;
 
-  if (!title || !content || !image || !Array.isArray(tags) || !tags.length) {
+  if (!title || !content || !Array.isArray(tags) || !category || !tags.length) {
     const err = new Error("Check all parameters passed");
     err.status = 400;
     err.error = "Bad request by client";
@@ -66,7 +67,16 @@ function store(req, res) {
 
   const id = posts.at(-1).id + 1;
 
-  const newPost = { id, title, content, image, tags };
+  const newPost = {
+    id,
+    title,
+    content,
+    author,
+    image,
+    category,
+    isPublished,
+    tags,
+  };
   posts.push(newPost);
 
   res.json({ newPost, posts });
