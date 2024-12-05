@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = process.env.HOST_PORT;
 const domain = process.env.HOST_DOMAIN;
@@ -9,6 +10,7 @@ const notFound = require("./middlewares/notFound");
 
 app.use(express.json());
 app.use(express.static("public"));
+app.use(cors());
 
 const homepageRouter = require("./routers/homepage");
 const postsRouter = require("./routers/posts");
